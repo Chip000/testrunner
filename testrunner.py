@@ -212,13 +212,14 @@ def run(args=None):
 			out.write(stri)
 			retcode = 1
 			break
-		except AttributeError:
+		except AttributeError as detail:
 			print "<ERROR> Error in the following command:"
 			print "<ERROR> cmd> " + cmd
 			print "<ERROR> Run in a separated terminal"
 			print "<ERROR> and try to find the mistake."
 			print "<ERROR> Remove the output file."
 			print "<ERROR> " + filename
+			print "<ERROR> ", detail
 			retcode = 1
 			break
 				
