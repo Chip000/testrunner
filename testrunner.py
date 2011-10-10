@@ -10,6 +10,7 @@ import Inst
 # Class for the timer
 import Timer
 from datetime import datetime
+import time
 
 RESULT_DIR = "./results/"
 BIN_DIR = "./bin/"
@@ -206,6 +207,7 @@ def run(args=None):
 			out.write(stri+"\n")
 
 			total_time += res['time']
+			time.sleep(60)
 		except UserWarning:
 			stri = item + " -> Timeout\n"
 			proc.adjustTimer(float(TIMEOUT))
