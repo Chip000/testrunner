@@ -26,19 +26,26 @@ str_times = sys.argv[2]
 
 inst_dir = "./inst/"
 
-output = open(inst_dir+"inst-"+str_length+"-"+str_times+".txt", "w")
+filename = "%sinst-%02d-%d.txt" % (inst_dir, length, times)
+output = open(filename, "w")
 
-for j in range(times):
+identity = range(1,length+1)
+j = 0
+while j < times:
 	seq = range(1,length+1)
+	line = []
 
 	for i in range(length):
 		x = random.choice(seq)
 		
-		output.write(str(x))
-		if i < length - 1:
-			 output.write(" ")
+		line.append(x)
 		seq.remove(x)
-
-	output.write("\n")
+	if line != identity:
+		for i in range(length):
+			output.write(str(line[i]))
+			if i < length - 1:
+				output.write(" ")
+		j += 1
+		output.write("\n")
 
 output.close()

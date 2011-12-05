@@ -31,8 +31,9 @@ class Timer(object):
 
 	def run(self, target=None, cmd=None, 
 		result_str="Optimal value: ([0-9]+)",
-		time_str="Total Time: ([0-9]+\.[0-9]+)",
-		glpk=False, glpk_outfile=""):
+		time_str="Time spent in solve    : ([0-9]+\.[0-9]+)",
+		glpk=False, glpk_outfile="",
+		time_str_id="Total Time: ([0-9]+\.[0-9]+)"):
 		"Run the target. Returns the result and time"
 		# creating process
 		fd = subprocess.Popen(target, shell=True,
@@ -54,6 +55,18 @@ class Timer(object):
 		signal.alarm(0)
 		self._curr_proc = None
 
+		# Creates output files 
+		_fd_stdout_file = open("./fd_stdout.txt", "w")
+		_fd_stdout_file.write(fd_stdout)
+		_fd_stdout_file.close()
+
+		_fd_stderr_file = open("./fd_stderr.txt", "w")
+		_fd_stderr_file.write(fd_stderr)
+		_fd_stderr_file.close()
+
+		# Delete the process object
+		del fd
+
 		# extracting the result
 		if glpk == False:
 			res = re.search(result_str,	
@@ -68,8 +81,12 @@ class Timer(object):
 					break
 			glpkfile.close()
 
-		time_str = re.search(time_str,
-				     fd_stdout).group(1)
+		if re.search(time_str, fd_stdout) != None:
+			time_str = re.search(time_str,
+					     fd_stdout).group(1)
+		else:
+			time_str = re.search(time_str_id,
+					     fd_stdout).group(1)
 		
 		return dict(result=res, time=float(time_str))
 

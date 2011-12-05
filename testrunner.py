@@ -207,10 +207,9 @@ def run(args=None):
 			out.write(stri+"\n")
 
 			total_time += res['time']
-			time.sleep(60)
 		except UserWarning:
 			stri = item + " -> Timeout\n"
-			proc.adjustTimer(float(TIMEOUT))
+			proc.adjustTimer(float(args['timeout']))
 			out.write(stri)
 			retcode = 1
 			break
