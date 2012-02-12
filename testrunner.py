@@ -195,7 +195,10 @@ def run(args=None):
 					glpk=True, 
 					glpk_outfile=GLPK_OUTFILE)
 
-			else: # ILOG
+			elif args['prog'] == "./bin/ilp_dist": # ILOG
+				res = proc.run(cmd, 
+					       time_str="Total \(root\+branch\&cut\) \=.*([0-9]+\.[0-9]+).*")
+			else: # ILOG CLP
 				res = proc.run(cmd)
 			
 			# adjust the timer
